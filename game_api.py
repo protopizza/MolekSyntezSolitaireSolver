@@ -1,8 +1,5 @@
-import PIL
-from PIL import Image, ImageChops, ImageGrab
+from PIL import Image, ImageGrab
 import time
-import functools
-import math
 from pynput.mouse import Button, Controller
 
 STACK_COUNT = 6
@@ -60,7 +57,7 @@ class GameApi:
         self.stacks = []
         self.mouse = Controller()
         # Get window focus first
-        self.__click_on((1280, 1015))
+        self.__focus()
         self.__new_game()
         self.__populate_game_state()
 
@@ -88,6 +85,9 @@ class GameApi:
         self.mouse.release(Button.left)
         time.sleep(0.05)
 
+    def __focus(self):
+        self.__click_on((1280, 1015))
+
     def __new_game(self):
         self.__click_on((1280, 1215))
         time.sleep(5)
@@ -96,7 +96,6 @@ class GameApi:
     Card tuple consists of (stack index, card index).
     '''
     def click_card(self, card_tuple):
-
         stack_num = card_tuple[0]
         card_num = card_tuple[1]
         x_pos = GAME_UPPER_LEFT_X + STARTING_X + (stack_num * CARD_WIDTH)
